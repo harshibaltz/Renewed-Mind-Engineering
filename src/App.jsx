@@ -1,27 +1,16 @@
-
 import React, { useState } from 'react';
 import './App.css';
+import Profilecard from './components/Profilecard'; // Fixed path (removed space)
 
 function App() {
   const [activeTab, setActiveTab] = useState('about');
+  const [showProfileCard, setShowProfileCard] = useState(false);
 
   return (
     <div className="portfolio-container">
-      {/* Header with Profile */}
+      {/* Header with Profile - Now using your Profilecard */}
       <header className="header">
-        <div className="profile-section">
-          <div className="profile-image-container">
-            <img 
-              src="../public/IMG_20251225_115023_968@1642939910.jpg" 
-              alt="Profile" 
-              className="profile-image"
-              title = "View my About"
-            />
-            <div className="online-indicator"></div>
-          </div>
-          <h1 className="name">Russel Valdez</h1>
-          <p className="title">I am a student from the university of Buea, at the faculty of Engineering and Technology i am a curious student like to discover new things when ever i have the possibility right now am studying modeling,software skills, like frontend development.</p>
-        </div>
+        <Profilecard /> {/* This replaces the profile-section div */}
       </header>
 
       {/* Navigation Buttons */}
@@ -52,13 +41,13 @@ function App() {
         </button>
       </div>
 
-      {/* Content Section */}
+      {/* Content Section - Keep as is */}
       <div className="content-section">
         {activeTab === 'about' && (
           <div className="about-card">
             <h2>About Me</h2>
             <p>
-              Hello! I'm Russel, a stundent passionate  of Science, new technology.very curious,I have an account on LinkedIn were you can find and follow me in my journey in
+              Hello! I'm Russel, a student passionate of Science, new technology.very curious,I have an account on LinkedIn were you can find and follow me in my journey in
               web applications,3D modeling and many more.
             </p>
             <div className="info-grid">
@@ -78,6 +67,7 @@ function App() {
           </div>
         )}
 
+        {/* Rest of your tabs remain the same... */}
         {activeTab === 'skills' && (
           <div className="skills-card">
             <h2>Technical Skills</h2>
@@ -167,9 +157,27 @@ function App() {
       <div className="social-buttons">
         <button className="social-btn github">GitHub</button>
         <button className="social-btn linkedin">LinkedIn</button>
-        <button className="social-btn twitter">Twitter</button>
-        <button className="social-btn portfolio">Portfolio</button>
+        <button 
+          className="social-btn portfolio"
+          onClick={() => {
+            setShowProfileCard(!showProfileCard);
+            // Scroll to profile card
+            const element = document.querySelector('.Profile-card-container');
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+        >
+          Portfolio
+        </button>
       </div>
+
+      {/* Optional: Show profile card conditionally */}
+      {showProfileCard && (
+        <div className="profile-card-popup">
+          <Profilecard />
+        </div>
+      )}
     </div>
   );
 }
